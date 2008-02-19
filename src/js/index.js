@@ -1,11 +1,12 @@
 import Search from './models/Search';
 import * as searchView from './views/searchView';
 import { clearSpinner, elements, renderSpinner } from './views/base';
+import Recipe from './models/Recipe';
 
 //Global state of the app
 const state = {};
 
-
+// Search Controller
 const searchCTRL =async () => {
     //get query value
     const query = searchView.getInputVal();
@@ -19,14 +20,19 @@ const searchCTRL =async () => {
         searchView.clearResults();
         renderSpinner(elements.searchRes)
 
-        // 3> get the result
-        await state.search.getRecipes();
-
-        // 4> clear spinner
-        clearSpinner()
-
-        // 5> render the result to UI
-        searchView.renderResults(state.search.result);
+        try{
+            // 3> get the result
+            await state.search.getRecipes();
+    
+            // 4> clear spinner
+            clearSpinner()
+    
+            // 5> render the result to UI
+            searchView.renderResults(state.search.result);
+        }catch(err) {
+            alert('Somthing went wrong with search....');
+            
+        }
     }
 }
 
@@ -43,4 +49,14 @@ elements.pagination.addEventListener('click', e => {
     // 5> render the result to UI
     searchView.renderResults(state.search.result, goToPage);
 
-})
+});
+
+
+//recipe object
+
+const recipeCTRL = () => {
+    const id = window.location.hash;
+    console.log(id);
+};
+
+window.addEventListener('hashchange', recipeCTRL)

@@ -28,7 +28,7 @@ const limitRacipeTitle = (title, limit = 17) => {
 const renderRacipe = racipe => {
   const markup = `
     <li class="preview">
-    <a class="preview__link preview__link--active" href="#${racipe.recipe_id}">
+    <a class="preview__link" href="#${racipe.recipe_id}">
       <figure class="preview__fig">
         <img src="${racipe.image_url}" alt="${racipe.title}" />
       </figure>
@@ -79,13 +79,13 @@ const renderButtons = (page, numResults, resPerPage) => {
   elements.pagination.insertAdjacentHTML('afterbegin', button)
 }
 
-export const renderResults = (racipes, page = 1, resPerPage = 10) => {
+export const renderResults = (recipes, page = 1, resPerPage = 10) => {
 
-  // render page racipes
-  const end = page * resPerPage; 
+  // render page recipes
   const start = (page - 1) * resPerPage;
-  racipes.slice(start, end).forEach(renderRacipe);
+  const end = page * resPerPage; 
+  recipes.slice(start, end).forEach(renderRacipe);
 
   //render pagination buttons
-  renderButtons(page, racipes.length, resPerPage)
+  renderButtons(page, recipes.length, resPerPage)
 }
