@@ -1,2 +1,3 @@
 console.log("Hello world");
-export default "this is another module from another file 2021"
+const esNext = 'we we we'
+export default `this is another module from another file 2021 ${esNext}`
