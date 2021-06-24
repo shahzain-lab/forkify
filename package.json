@@ -4,7 +4,7 @@
   "description": "modern javascript project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/shahzain-lab/forkify/issues"
   },
-  "homepage": "https://github.com/shahzain-lab/forkify#readme"
+  "homepage": "https://github.com/shahzain-lab/forkify#readme",
+  "devDependencies": {
+    "webpack": "^5.40.0",
+    "webpack-cli": "^4.7.2"
+  }
 }
