@@ -30,7 +30,17 @@ const searchCTRL =async () => {
     }
 }
 
-elements.searchForm.addEventListener('submit', (e) => {
+elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     searchCTRL();
+})
+
+elements.pagination.addEventListener('click', e => {
+    const btn = e.target.closest('.btn--inline');
+    const goToPage = parseInt(btn.dataset.goto, 10);
+
+    searchView.clearResults();
+    // 5> render the result to UI
+    searchView.renderResults(state.search.result, goToPage);
+
 })

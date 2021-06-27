@@ -8,6 +8,7 @@ export const clearFeild = () => {
 
 export const clearResults = () => {
   elements.racipeResList.innerHTML = '';
+  elements.pagination.innerHTML = '';
 }
 
 const limitRacipeTitle = (title, limit = 17) => {
@@ -46,43 +47,45 @@ const renderRacipe = racipe => {
   elements.racipeResList.insertAdjacentHTML('beforeend', markup);
 }
 
-const createButton = (page, type) => `
-     <button class="btn--inline pagination__btn--${type}">
-        <svg class="search__icon">
-           <use href="img/icons.svg#icon-arrow-${type === 'prev' ? 'left' : 'right'}"></use>
-        </svg>
-        <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
-    </button>
-
-    <!-- <button class="btn--inline pagination__btn--prev">
-    <svg class="search__icon">
-      <use href="img/icons.svg#icon-arrow-left"></use>
-    </svg>
-    <span>Page 1</span>
-    </button>
-    <button class="btn--inline pagination__btn--next">
-    <span>Page 3</span>
-    <svg class="search__icon">
-      <use href="img/icons.svg#icon-arrow-right"></use>
-    </svg>
-    </button> -->
+const createButtons = (page, type) => `
+          <button class="btn--inline pagination__btn--${type}" data-goto = ${type === 'prev' ? page - 1 : page + 1}>
+             <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
+              <svg class="search__icon">
+                  <use href="img/icons.svg#icon-arrow-${type === 'prev' ? 'left' : 'right'}"></use>
+              </svg>
+          </button>
 `
 
-const renderButton = (page, numResults, resPerPage) => {
+const renderButtons = (page, numResults, resPerPage) => {
   const pages = Math.ceil(numResults / resPerPage);
 
-  if (page === 1 && pages > 1) {
-    //only show the next btn
-  } else if (page < pages) {
-    //both btns
-  } else if (page === pages && pages > 1) {
-    //only show the prev btn
+  let button;
+  if(page === 1 && pages > 1) {
+    //only render 'next' btn
+    button = createButtons(page, 'next')  
+  
+  }else if(page < pages){
+    //Both btns
+    button =` 
+         ${createButtons(page, 'prev')}
+         ${createButtons(page, 'next')}
+         `
+  
+  }else if(page === pages && pages > 1){
+     //only render 'prev' btn
+     button = createButtons(page, 'prev')
   }
+
+  elements.pagination.insertAdjacentHTML('afterbegin', button)
 }
 
 export const renderResults = (racipes, page = 1, resPerPage = 10) => {
-  const start = (page - 1) * resPerPage;
-  const end = page * resPerPage;
 
+  // render page racipes
+  const end = page * resPerPage; 
+  const start = (page - 1) * resPerPage;
   racipes.slice(start, end).forEach(renderRacipe);
+
+  //render pagination buttons
+  renderButtons(page, racipes.length, resPerPage)
 }
