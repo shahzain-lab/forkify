@@ -9,7 +9,7 @@ const state = {};
 // Search Controller
 const searchCTRL =async () => {
     //get query value
-    const query = searchView.getInputVal();
+    const query = 'pizza'//searchView.getInputVal();
     
     if(query) {
         // 1> new search obj and to the state
@@ -40,6 +40,12 @@ elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     searchCTRL();
 })
+//TESTING
+
+window.addEventListener('load', e => {
+    e.preventDefault();
+    searchCTRL();
+})
 
 elements.pagination.addEventListener('click', e => {
     const btn = e.target.closest('.btn--inline');
@@ -54,9 +60,32 @@ elements.pagination.addEventListener('click', e => {
 
 //recipe object
 
-const recipeCTRL = () => {
-    const id = window.location.hash;
-    console.log(id);
+const recipeCTRL = async () => {
+    //get id from URL 
+    const id = window.location.hash.replace("#", "");
+    
+    if(id){
+        // prepare UI for changes
+
+        // create new recipe object
+        state.recipe = new Recipe(id);
+
+        try{
+            // get the recipe data
+            await state.recipe.getRecipe();
+            window.r = state.recipe
+    
+            // calc serving and time
+            state.recipe.calcTime();
+            state.recipe.calcServing();
+    
+            // render the recipe to UI
+            console.log(state.recipe);
+        }catch(err){
+            console.log("Something went wrong...")
+        }
+    }
 };
 
-window.addEventListener('hashchange', recipeCTRL)
+["hashchange", "load"].forEach(e => window.addEventListener(e, recipeCTRL));
+
