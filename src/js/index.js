@@ -31,7 +31,7 @@ const searchCTRL =async () => {
             searchView.renderResults(state.search.result);
         }catch(err) {
             alert('Somthing went wrong with search....');
-            
+            clearSpinner()
         }
     }
 }
