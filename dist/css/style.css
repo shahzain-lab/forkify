@@ -188,6 +188,10 @@ body {
     .search__field::placeholder {
       color: #DAD0CC; }
 
+.available__recipe{
+  text-decoration: none;
+}
+
 .likes {
   position: relative;
   align-self: stretch;
@@ -443,7 +447,8 @@ body {
   .shopping__list {
     list-style: none;
     max-height: 77rem;
-    overflow: scroll; }
+    overflow-y: scroll; 
+  }
   .shopping__item {
     display: flex;
     align-items: flex-start;

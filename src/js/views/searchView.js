@@ -1,17 +1,28 @@
 import { elements } from "./base"
 
-export const getInputVal = () => elements.searchInput.value;
+const inpFeild = elements.searchInput;
+inpFeild.focus()
+export const getInputVal = () => inpFeild.value;
 
 export const clearFeild = () => {
   elements.searchInput.value = "";
 }
 
 export const clearResults = () => {
-  elements.racipeResList.innerHTML = '';
-  elements.pagination.innerHTML = '';
+  elements.searchResList.innerHTML = '';
+  elements.searchResPages.innerHTML = '';
 }
 
-const limitRacipeTitle = (title, limit = 17) => {
+export const highlightSelected = id => {
+  const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+  resultsArr.forEach(el => {
+      el.classList.remove('results__link--active');
+  });
+  document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active');
+};
+
+
+export const limitRecipeTitle = (title, limit = 17) => {
   const newTitle = [];
   if (title.length > limit) {
     title.split(" ").reduce((acc, cur) => {
@@ -25,36 +36,31 @@ const limitRacipeTitle = (title, limit = 17) => {
   return title;
 }
 
-const renderRacipe = racipe => {
+const renderRacipe = recipe => {
   const markup = `
-    <li class="preview">
-    <a class="preview__link" href="#${racipe.recipe_id}">
-      <figure class="preview__fig">
-        <img src="${racipe.image_url}" alt="${racipe.title}" />
+  <li>
+  <a class="results__link" href="#${recipe.recipe_id}">
+      <figure class="results__fig">
+          <img src="${recipe.image_url}" alt="${recipe.title}">
       </figure>
-      <div class="preview__data">
-        <h4 class="preview__title">${limitRacipeTitle(racipe.title)}</h4>
-        <p class="preview__publisher">${racipe.publisher}</p>
-        <div class="preview__user-generated">
-          <svg>
-            <use href="img/icons.svg#icon-user"></use>
-          </svg>
-        </div>
+      <div class="results__data">
+          <h4 class="results__name">${limitRecipeTitle(recipe.title)}</h4>
+          <p class="results__author">${recipe.publisher}</p>
       </div>
-    </a>
-  </li>
-    `
-  elements.racipeResList.insertAdjacentHTML('beforeend', markup);
+  </a>
+</li>
+`;
+  elements.searchResList.insertAdjacentHTML('beforeend', markup);
 }
 
 const createButtons = (page, type) => `
-          <button class="btn--inline pagination__btn--${type}" data-goto = ${type === 'prev' ? page - 1 : page + 1}>
-             <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
-              <svg class="search__icon">
-                  <use href="img/icons.svg#icon-arrow-${type === 'prev' ? 'left' : 'right'}"></use>
-              </svg>
-          </button>
-`
+<button class="btn-inline results__btn--${type}" data-goto=${type === 'prev' ? page - 1 : page + 1}>
+    <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
+    <svg class="search__icon">
+        <use href="img/icons.svg#icon-triangle-${type === 'prev' ? 'left' : 'right'}"></use>
+    </svg>
+</button>
+`;
 
 const renderButtons = (page, numResults, resPerPage) => {
   const pages = Math.ceil(numResults / resPerPage);
@@ -76,7 +82,7 @@ const renderButtons = (page, numResults, resPerPage) => {
      button = createButtons(page, 'prev')
   }
 
-  elements.pagination.insertAdjacentHTML('afterbegin', button)
+  elements.searchResPages.insertAdjacentHTML('afterbegin', button)
 }
 
 export const renderResults = (recipes, page = 1, resPerPage = 10) => {

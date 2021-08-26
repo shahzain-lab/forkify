@@ -1,27 +1,31 @@
 export const elements = {
-    searchInput: document.querySelector('.search__field'),
-    searchForm: document.querySelector('.search'),
-    searchRes: document.querySelector('.search-results'),
-    racipeResList: document.querySelector('.results'),
-    pagination: document.querySelector('.pagination')
+  searchForm: document.querySelector('.search'),
+  searchInput: document.querySelector('.search__field'),
+  searchRes: document.querySelector('.results'),
+  searchResList: document.querySelector('.results__list'),
+  searchResPages: document.querySelector('.results__pages'),
+  recipe: document.querySelector('.recipe'),
+  shopping: document.querySelector('.shopping__list'),
+  likesMenu: document.querySelector('.likes__field'),
+  likesList: document.querySelector('.likes__list')
 }
 
 const elementsStr = {
-    spinner: 'spinner'
+    loader: 'loader'
 }
 
-export const renderSpinner = parent => {
-    const spinner = `
-    <div class="${elementsStr.spinner}">
-    <svg>
-      <use href="img/icons.svg#icon-loader"></use>
-    </svg>
+export const renderLoader = parent => {
+  const loader = `
+  <div class="${elementsStr.loader}">
+      <svg>
+          <use href="img/icons.svg#icon-cw"></use>
+      </svg>
   </div>
-    `
-    parent.insertAdjacentHTML('afterbegin', spinner)
+`;
+    parent.insertAdjacentHTML('afterbegin', loader)
 }
 
-export const clearSpinner = () => {
-    const spinner = document.querySelector(`.${elementsStr.spinner}`);
-    if(spinner) spinner.parentElement.removeChild(spinner);
+export const clearLoader = () => {
+    const loader = document.querySelector(`.${elementsStr.loader}`);
+    if(loader) loader.parentElement.removeChild(loader);
 }
