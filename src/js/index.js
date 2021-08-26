@@ -8,6 +8,9 @@ import * as listView from './views/listView';
 import * as likesView from './views/likesView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
+
+console.log('Welcome to the Application');
+
 //Global state of the app
 const state = {};
 

@@ -1,3 +1,3 @@
-# forkify
+# Forkify FOOD app 🍱|| [Live Demo](https://forkify-shahzain.netlify.app/)
 
-## Modern javascript architecture 
+![forkify](./flowchart/forkify1.png)
