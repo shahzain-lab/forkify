@@ -17,7 +17,10 @@
     "url": "https://github.com/shahzain-lab/forkify/issues"
   },
   "homepage": "https://github.com/shahzain-lab/forkify#readme",
-  "dependencies": {},
+  "dependencies": {
+    "core-js": "^3.16.3",
+    "regenerator-runtime": "^0.13.9"
+  },
   "devDependencies": {
     "@parcel/transformer-image": "^2.0.0-rc.0",
     "@parcel/transformer-sass": "^2.0.0-rc.0",
