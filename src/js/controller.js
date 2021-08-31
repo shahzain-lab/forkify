@@ -4,13 +4,6 @@ import * as model from './model';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime'; 
 
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -39,5 +32,8 @@ async function controlRecipe() {
   }
 };
 
+function init() {
+  recipeView.addHandlerRender(controlRecipe)
+}
+init()
 
-['hashchange', 'load'].forEach(ev => window.addEventListener(ev, controlRecipe))

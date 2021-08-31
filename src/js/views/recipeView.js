@@ -31,10 +31,14 @@ class RecipeView{
      this.#parentElement.insertAdjacentHTML('afterbegin', markup);
    }
 
+   addHandlerRender(callback) {
+  ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, callback));
+   }
+
     #generateMarkup() {
         return `
         <figure class="recipe__fig">
-        <img src="${this.#data.image}" alt="${this.#data.title}" class="recipe__img" />
+        <img src="${this.#data.image}" crossorigin alt="${this.#data.title}" class="recipe__img" />
         <h1 class="recipe__title">
           <span>${this.#data.title}</span>
         </h1>
