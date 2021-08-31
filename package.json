@@ -19,6 +19,7 @@
   "homepage": "https://github.com/shahzain-lab/forkify#readme",
   "dependencies": {
     "core-js": "^3.16.3",
+    "fractional": "^1.0.0",
     "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
