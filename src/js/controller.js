@@ -20,6 +20,9 @@ async function controlRecipe() {
    // 3 loading data
    await model.loadRecipe(id);
 
+   // update search for active class
+   resultsView.update(model.loadSearchResultPage()) 
+
    // 4 render data
    recipeView.render(model.state.recipe);
 
@@ -59,8 +62,8 @@ function controlPagination(gotoPage) {
 function controlUpdateServing(newServing) {
     model.updateServing(newServing);
     
-    //  render data
-    recipeView.render(model.state.recipe);
+    //  render UPDATE data
+    recipeView.update(model.state.recipe);
 }
 
 function init() {
