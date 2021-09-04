@@ -8,6 +8,7 @@ import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
 import bookmarkView from './views/bookmarkView.js';
 import addRecipeView from './views/addRecipeView'
+import { MODEL_TIMEOUT_SEC } from './config.js';
 
 async function controlRecipe() {
   try{
@@ -90,7 +91,28 @@ function controlBookmarks() {
 
 async function controlAddRecipe(newRecipe) {
   try{
-    await model.uploadRecipe(newRecipe)
+    // render spinner
+    addRecipeView.renderSpinner()
+
+    await model.uploadRecipe(newRecipe);
+
+    // change ID
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+
+    //render bookmarks
+    bookmarkView.render(model.state.bookmarks)
+    
+    // render recipe
+    recipeView.render(model.state.recipe);
+    
+    // success MSG
+    addRecipeView.renderMessage()
+    
+    // close window
+    setTimeout(() => {
+      addRecipeView.toggleWindow()
+    }, MODEL_TIMEOUT_SEC * 1000);
+
   }catch(err) {
     console.log(err);
     addRecipeView.renderErrorMsg(err.message)
